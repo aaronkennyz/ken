@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KenBriSelleRis | Digital Solutions</title>
+    <title>KenBriSelleRis | No Cap, Just Code</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,23 +29,41 @@
                             accent: '#ccff00', // Acid Green
                             accentHover: '#b3e600',
                             purple: '#b49bff',
+                            error: '#ff3333',
                         }
                     },
                     animation: {
-                        'marquee': 'marquee 25s linear infinite',
+                        'marquee': 'marquee 15s linear infinite',
+                        'marquee-reverse': 'marqueeReverse 15s linear infinite',
                         'blob': 'blob 7s infinite',
-                        'spin-slow': 'spin 12s linear infinite',
+                        'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
+                        'glitch': 'glitch 1s linear infinite',
                     },
                     keyframes: {
                         marquee: {
                             '0%': { transform: 'translateX(0%)' },
                             '100%': { transform: 'translateX(-100%)' },
                         },
+                        marqueeReverse: {
+                            '0%': { transform: 'translateX(-100%)' },
+                            '100%': { transform: 'translateX(0%)' },
+                        },
                         blob: {
                             '0%': { transform: 'translate(0px, 0px) scale(1)' },
                             '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
                             '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
                             '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        shake: {
+                            '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+                            '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+                            '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+                            '40%, 60%': { transform: 'translate3d(4px, 0, 0)' }
+                        },
+                        glitch: {
+                            '2%, 64%': { transform: 'translate(2px,0) skew(0deg)' },
+                            '4%, 60%': { transform: 'translate(-2px,0) skew(0deg)' },
+                            '62%': { transform: 'translate(0,0) skew(5deg)' },
                         }
                     }
                 }
@@ -53,94 +71,97 @@
         }
     </script>
     <style>
-        /* Custom Cursor */
+        /* Base Styles */
         body {
-            cursor: none;
             background-color: #050505;
             color: white;
             overflow-x: hidden;
         }
 
+        /* Responsive Custom Cursor */
         .custom-cursor {
             position: fixed;
             top: 0;
             left: 0;
             width: 20px;
             height: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            background: white;
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
             transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s, background-color 0.3s;
-            mix-blend-mode: difference;
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+            mix-blend-mode: exclusion;
+            display: none;
+            /* Hidden by default for touch */
         }
 
         .custom-cursor.active {
-            width: 50px;
-            height: 50px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-color: transparent;
-            backdrop-filter: blur(2px);
+            width: 80px;
+            height: 80px;
+            background-color: #ccff00;
+            mix-blend-mode: normal;
+            opacity: 0.8;
+            border: 2px solid black;
         }
 
-        /* Hide Scrollbar but keep functionality */
-        ::-webkit-scrollbar {
-            width: 8px;
+        .custom-cursor.active::after {
+            content: 'CLICK IT';
+            color: black;
+            font-size: 10px;
+            font-weight: bold;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
-        ::-webkit-scrollbar-track {
-            background: #0a0a0a;
+        /* Desktop-only Interactions */
+        @media (hover: hover) and (pointer: fine) {
+            body {
+                cursor: none;
+            }
+
+            .custom-cursor {
+                display: block;
+            }
+
+            .glass-card:hover {
+                transform: translateY(-5px) rotate(1deg);
+                border-color: #ccff00;
+            }
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 4px;
-        }
+        /* Touch Device Optimizations */
+        @media (hover: none) {
+            body {
+                cursor: auto;
+            }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ccff00;
-        }
-
-        /* Noise Texture Overlay */
-        .noise-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 50;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+            .glass-card:active {
+                transform: scale(0.98);
+                border-color: #ccff00;
+            }
         }
 
         .glass-card {
-            background: rgba(26, 26, 26, 0.6);
+            background: rgba(26, 26, 26, 0.4);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease, border-color 0.3s ease;
         }
 
-        /* Abstract Avatar Gradients */
-        .avatar-ken {
-            background: radial-gradient(circle at 30% 30%, #ccff00 0%, #050505 70%);
+        /* Easter Egg: Chaos Mode */
+        body.chaos-mode {
+            font-family: "Comic Sans MS", "Comic Sans", cursive !important;
+            filter: invert(1) hue-rotate(180deg);
+            transition: all 0.5s ease;
         }
 
-        .avatar-bri {
-            background: radial-gradient(circle at 70% 30%, #b49bff 0%, #050505 70%);
+        body.chaos-mode * {
+            animation: shake 2s infinite !important;
         }
 
-        .avatar-selle {
-            background: radial-gradient(circle at 30% 70%, #ffffff 0%, #050505 70%);
-        }
-
-        .avatar-ris {
-            background: radial-gradient(circle at 70% 70%, #333333 0%, #000000 70%);
-            border: 1px solid #333;
-        }
-
-        /* Reveal Animation Classes */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -151,379 +172,543 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Glitch Text Effect - Desktop Only Preferred */
+        @media (min-width: 768px) {
+            .glitch-wrapper {
+                position: relative;
+            }
+
+            .glitch-wrapper::before,
+            .glitch-wrapper::after {
+                content: attr(data-text);
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #050505;
+            }
+
+            .glitch-wrapper::before {
+                left: 2px;
+                text-shadow: -1px 0 #ff00c1;
+                clip: rect(44px, 450px, 56px, 0);
+                animation: glitch-anim 5s infinite linear alternate-reverse;
+            }
+
+            .glitch-wrapper::after {
+                left: -2px;
+                text-shadow: -1px 0 #00fff9;
+                clip: rect(44px, 450px, 56px, 0);
+                animation: glitch-anim2 5s infinite linear alternate-reverse;
+            }
+        }
+
+        @keyframes glitch-anim {
+            0% {
+                clip: rect(38px, 9999px, 81px, 0);
+            }
+
+            20% {
+                clip: rect(66px, 9999px, 14px, 0);
+            }
+
+            40% {
+                clip: rect(13px, 9999px, 63px, 0);
+            }
+
+            60% {
+                clip: rect(78px, 9999px, 2px, 0);
+            }
+
+            80% {
+                clip: rect(20px, 9999px, 96px, 0);
+            }
+
+            100% {
+                clip: rect(83px, 9999px, 49px, 0);
+            }
+        }
+
+        @keyframes glitch-anim2 {
+            0% {
+                clip: rect(58px, 9999px, 91px, 0);
+            }
+
+            20% {
+                clip: rect(8px, 9999px, 24px, 0);
+            }
+
+            40% {
+                clip: rect(23px, 9999px, 43px, 0);
+            }
+
+            60% {
+                clip: rect(48px, 9999px, 12px, 0);
+            }
+
+            80% {
+                clip: rect(90px, 9999px, 6px, 0);
+            }
+
+            100% {
+                clip: rect(33px, 9999px, 59px, 0);
+            }
+        }
     </style>
 </head>
 
 <body class="font-sans antialiased selection:bg-brand-accent selection:text-brand-black">
 
-    <!-- Custom Cursor Element -->
+    <!-- Custom Cursor -->
     <div class="custom-cursor" id="cursor"></div>
 
-    <!-- Noise Texture -->
-    <div class="noise-overlay"></div>
+    <!-- Chaos Mode Toggle (Hidden in plain sight) -->
+    <div class="fixed bottom-4 right-4 z-[70]">
+        <button id="chaos-btn"
+            class="text-[10px] text-gray-800 hover:text-brand-accent transition-colors opacity-50 hover:opacity-100 hoverable bg-white/10 px-2 py-1 rounded backdrop-blur-sm">
+            ⚠️ do not click
+        </button>
+    </div>
 
     <!-- Background Gradients -->
     <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
         <div
-            class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-brand-purple rounded-full mix-blend-multiply filter blur-[128px] opacity-20 animate-blob">
+            class="absolute top-[-10%] left-[-10%] w-64 h-64 md:w-96 md:h-96 bg-brand-purple rounded-full mix-blend-multiply filter blur-[80px] md:blur-[128px] opacity-20 animate-blob">
         </div>
         <div
-            class="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-brand-accent rounded-full mix-blend-multiply filter blur-[128px] opacity-10 animate-blob animation-delay-2000">
+            class="absolute bottom-[-10%] right-[-10%] w-64 h-64 md:w-96 md:h-96 bg-brand-accent rounded-full mix-blend-multiply filter blur-[80px] md:blur-[128px] opacity-10 animate-blob animation-delay-2000">
         </div>
     </div>
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 top-0 px-6 py-6 mix-blend-difference text-white">
+    <nav class="fixed w-full z-50 top-0 px-4 md:px-6 py-4 md:py-6 mix-blend-difference text-white">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="#" class="text-2xl font-display font-bold tracking-tighter hoverable">
-                KBSR<span class="text-brand-accent">.</span>
+            <a href="#" id="logo-btn"
+                class="text-xl md:text-2xl font-display font-bold tracking-tighter hoverable group z-50 relative">
+                KBSR<span class="text-brand-accent group-hover:text-brand-purple">_v2.zip</span>
             </a>
 
             <div class="hidden md:flex gap-8 text-sm font-medium uppercase tracking-widest">
-                <a href="#work" class="hover:text-brand-accent transition-colors hoverable">Work</a>
-                <a href="#services" class="hover:text-brand-accent transition-colors hoverable">Services</a>
-                <a href="#team" class="hover:text-brand-accent transition-colors hoverable">The Squad</a>
+                <a href="#receipts"
+                    class="hover:text-brand-accent transition-colors hoverable decoration-wavy underline-offset-4 hover:underline">Receipts</a>
+                <a href="#vibes"
+                    class="hover:text-brand-accent transition-colors hoverable decoration-wavy underline-offset-4 hover:underline">The
+                    Vibe</a>
+                <a href="#main-characters"
+                    class="hover:text-brand-accent transition-colors hoverable decoration-wavy underline-offset-4 hover:underline">Main
+                    Characters</a>
             </div>
 
             <a href="#contact"
-                class="hidden md:block px-6 py-2 border border-white/20 rounded-full text-sm font-medium hover:bg-brand-accent hover:text-black hover:border-brand-accent transition-all duration-300 hoverable">
-                Let's Talk
+                class="hidden md:block px-6 py-2 border border-white/20 rounded-full text-sm font-medium bg-brand-black hover:bg-brand-accent hover:text-black hover:border-brand-accent transition-all duration-300 hoverable transform hover:-rotate-2">
+                Slide into DMs
             </a>
 
-            <!-- Mobile Menu Button -->
-            <button class="md:hidden hoverable" id="mobile-menu-btn">
+            <button class="md:hidden hoverable z-50 relative" id="mobile-menu-btn" aria-label="Toggle menu">
                 <i data-lucide="menu"></i>
             </button>
         </div>
     </nav>
 
-    <!-- Mobile Menu Overlay -->
+    <!-- Mobile Menu -->
     <div id="mobile-menu"
-        class="fixed inset-0 bg-brand-black z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center gap-8">
-        <button id="close-menu" class="absolute top-6 right-6 hoverable"><i data-lucide="x"></i></button>
-        <a href="#work" class="text-4xl font-display font-bold hover:text-brand-accent">Work</a>
-        <a href="#services" class="text-4xl font-display font-bold hover:text-brand-accent">Services</a>
-        <a href="#team" class="text-4xl font-display font-bold hover:text-brand-accent">Team</a>
-        <a href="#contact" class="text-4xl font-display font-bold text-brand-accent">Contact</a>
+        class="fixed inset-0 bg-brand-black z-[60] transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center gap-8 px-4">
+        <button id="close-menu" class="absolute top-6 right-6 hoverable p-2" aria-label="Close menu"><i
+                data-lucide="x"></i></button>
+        <a href="#receipts" class="text-3xl font-display font-bold hover:text-brand-accent hover:italic">Receipts</a>
+        <a href="#vibes" class="text-3xl font-display font-bold hover:text-brand-accent hover:italic">The Vibe</a>
+        <a href="#main-characters"
+            class="text-3xl font-display font-bold hover:text-brand-accent hover:italic">Squad</a>
+        <a href="#contact" class="text-3xl font-display font-bold text-brand-accent">u up?</a>
     </div>
 
     <!-- Hero Section -->
     <header class="min-h-screen flex flex-col justify-center items-center px-4 relative pt-20">
-        <div class="text-center max-w-5xl mx-auto z-10">
-            <div
-                class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm mb-6 reveal">
-                <span class="w-2 h-2 rounded-full bg-brand-accent animate-pulse"></span>
-                <span class="text-xs font-mono uppercase tracking-wider text-gray-300">Accepting New Projects</span>
+        <div class="text-center max-w-5xl mx-auto z-10 w-full">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm mb-6 reveal group cursor-help"
+                title="We actually charge for this">
+                <span class="w-2 h-2 rounded-full bg-brand-accent animate-ping"></span>
+                <span
+                    class="text-[10px] md:text-xs font-mono uppercase tracking-wider text-gray-300 group-hover:text-white transition-colors">Accepting
+                    Money (Not Exposure)</span>
             </div>
 
-            <h1
-                class="text-5xl md:text-8xl lg:text-9xl font-display font-bold leading-[0.9] tracking-tighter mb-6 reveal transition-all">
-                WE BUILD <br>
-                <span class="text-brand-accent italic">DIGITAL</span> CHAOS.
+            <!-- Scaled typography for mobile -->
+            <h1 class="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-display font-bold leading-[0.95] md:leading-[0.9] tracking-tighter mb-6 reveal transition-all glitch-wrapper break-words max-w-full"
+                data-text="WE MAKE APPS THAT DON'T SUCK.">
+                WE MAKE APPS <br class="hidden md:block">
+                <span class="text-brand-accent italic hover:not-italic cursor-pointer"
+                    onclick="alert('Stop touching the CSS.')">THAT DON'T SUCK.</span>
             </h1>
 
-            <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light reveal delay-100">
-                <span class="font-bold text-white">KenBriSelleRis</span> is a solution-obsessed collective. We craft
-                high-performance websites and software with a premium touch.
+            <p
+                class="text-gray-400 text-base md:text-xl max-w-xl md:max-w-2xl mx-auto mb-10 font-light reveal delay-100 px-4">
+                Four nerds in a trenchcoat building stuff so you don't have to. We speak Python, React, and fluent <span
+                    class="line-through decoration-brand-accent decoration-2">Corporate</span> Sarcasm.
             </p>
 
-            <div class="flex flex-col md:flex-row gap-4 justify-center reveal delay-200">
+            <div class="flex flex-col sm:flex-row gap-4 justify-center reveal delay-200 w-full px-4 sm:px-0 sm:w-auto">
                 <a href="#contact"
-                    class="px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-brand-accent hover:scale-105 transition-all duration-300 hoverable">
-                    Start a Project
+                    class="px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-brand-accent hover:scale-110 hover:-rotate-3 transition-all duration-300 hoverable shadow-[4px_4px_0px_0px_rgba(204,255,0,1)] hover:shadow-none text-center">
+                    Take My Money 💸
                 </a>
-                <a href="#work"
-                    class="px-8 py-4 border border-white/20 rounded-full hover:bg-white/10 transition-all duration-300 hoverable flex items-center gap-2 justify-center">
-                    See Our Work <i data-lucide="arrow-down-right" class="w-4 h-4"></i>
+                <a href="#receipts"
+                    class="px-8 py-4 border border-white/20 rounded-full hover:bg-white/10 transition-all duration-300 hoverable flex items-center gap-2 justify-center hover:border-brand-purple text-center">
+                    Judge Us <i data-lucide="eye" class="w-4 h-4"></i>
                 </a>
             </div>
-        </div>
-
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
-            <i data-lucide="arrow-down" class="text-white/30"></i>
         </div>
     </header>
 
-    <!-- Infinite Marquee -->
+    <!-- Marquee of Chaos -->
     <div
-        class="w-full py-8 bg-brand-accent text-brand-black overflow-hidden border-y border-brand-black transform -rotate-1 origin-left z-20">
-        <div class="flex whitespace-nowrap animate-marquee">
-            <span class="text-4xl font-display font-bold mx-8">WEB DEVELOPMENT</span>
-            <span class="text-4xl font-display font-bold mx-8">✦</span>
-            <span class="text-4xl font-display font-bold mx-8">SOFTWARE ENGINEERING</span>
-            <span class="text-4xl font-display font-bold mx-8">✦</span>
-            <span class="text-4xl font-display font-bold mx-8">UI/UX DESIGN</span>
-            <span class="text-4xl font-display font-bold mx-8">✦</span>
-            <span class="text-4xl font-display font-bold mx-8">BRAND STRATEGY</span>
-            <span class="text-4xl font-display font-bold mx-8">✦</span>
-            <span class="text-4xl font-display font-bold mx-8">WEB DEVELOPMENT</span>
-            <span class="text-4xl font-display font-bold mx-8">✦</span>
-            <span class="text-4xl font-display font-bold mx-8">SOFTWARE ENGINEERING</span>
-            <span class="text-4xl font-display font-bold mx-8">✦</span>
-            <span class="text-4xl font-display font-bold mx-8">UI/UX DESIGN</span>
-            <span class="text-4xl font-display font-bold mx-8">✦</span>
+        class="w-full py-4 md:py-6 bg-brand-accent text-brand-black overflow-hidden border-y border-brand-black transform -rotate-1 origin-left z-20 hover:rotate-1 transition-transform">
+        <div class="flex whitespace-nowrap animate-marquee font-mono">
+            <span class="text-lg md:text-2xl font-bold mx-4">NO BUGS (MOSTLY)</span> 🤡
+            <span class="text-lg md:text-2xl font-bold mx-4">STACK OVERFLOW EXPERTS</span> 💻
+            <span class="text-lg md:text-2xl font-bold mx-4">CENTERING DIVS SINCE 2024</span> 📐
+            <span class="text-lg md:text-2xl font-bold mx-4">IT WORKS ON MY MACHINE</span> 🤷
+            <span class="text-lg md:text-2xl font-bold mx-4">POWERED BY CAFFEINE & ANXIETY</span> ☕
+            <span class="text-lg md:text-2xl font-bold mx-4">NO BUGS (MOSTLY)</span> 🤡
+            <span class="text-lg md:text-2xl font-bold mx-4">STACK OVERFLOW EXPERTS</span> 💻
+            <span class="text-lg md:text-2xl font-bold mx-4">CENTERING DIVS SINCE 2024</span> 📐
+            <span class="text-lg md:text-2xl font-bold mx-4">IT WORKS ON MY MACHINE</span> 🤷
         </div>
     </div>
 
-    <!-- About / Manifesto -->
-    <section class="py-24 px-6 md:px-12 bg-brand-black relative">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+    <!-- The Manifesto -->
+    <section class="py-16 md:py-24 px-6 md:px-12 bg-brand-black relative">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
             <div class="reveal">
-                <h2 class="text-4xl md:text-6xl font-display font-bold mb-6">
+                <h2 class="text-3xl md:text-6xl font-display font-bold mb-6">
                     SMALL TEAM.<br>
-                    <span class="text-gray-600">BIG IMPACT.</span>
+                    <span class="text-brand-purple italic">MAJOR ISSUES.</span>
                 </h2>
             </div>
             <div class="reveal delay-100">
-                <p class="text-xl md:text-2xl text-gray-300 leading-relaxed">
-                    We are 4 distinct minds merged into one powerhouse. We don't do corporate jargon. We build software
-                    that works and websites that people actually want to look at. From complex back-end logic to buttery
-                    smooth front-end interactions.
+                <p class="text-lg md:text-2xl text-gray-300 leading-relaxed">
+                    We are "KenBriSelleRis". Yes, we know it sounds like a prescription medication. We build digital
+                    experiences that slap. No bloated meetings, no jargon, just clean code and questionable commit
+                    messages.
                 </p>
-                <div class="mt-8 flex gap-4">
-                    <div class="px-4 py-2 border border-white/10 rounded-lg text-sm bg-white/5">React/Next.js</div>
-                    <div class="px-4 py-2 border border-white/10 rounded-lg text-sm bg-white/5">Python</div>
-                    <div class="px-4 py-2 border border-white/10 rounded-lg text-sm bg-white/5">Node.js</div>
-                    <div class="px-4 py-2 border border-white/10 rounded-lg text-sm bg-white/5">Design</div>
+                <div class="mt-8 flex flex-wrap gap-2">
+                    <span
+                        class="px-3 py-1 rounded-full border border-gray-700 text-xs text-gray-400 hover:bg-red-500 hover:text-white cursor-not-allowed transition-colors">Jira
+                        (We hate it)</span>
+                    <span
+                        class="px-3 py-1 rounded-full border border-gray-700 text-xs text-gray-400 hover:bg-blue-500 hover:text-white cursor-pointer transition-colors">VS
+                        Code</span>
+                    <span
+                        class="px-3 py-1 rounded-full border border-gray-700 text-xs text-gray-400 hover:bg-green-500 hover:text-black cursor-pointer transition-colors">Spotify
+                        Premium</span>
+                    <span
+                        class="px-3 py-1 rounded-full border border-gray-700 text-xs text-gray-400 hover:bg-yellow-500 hover:text-black cursor-pointer transition-colors">Energy
+                        Drinks</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Services Bento Grid -->
-    <section id="services" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
-        <div class="mb-16 reveal">
-            <h2 class="text-sm font-mono uppercase text-brand-accent tracking-widest mb-2">Our Expertise</h2>
-            <h3 class="text-4xl md:text-5xl font-display font-bold">Everything you need.</h3>
+    <!-- Services (Vibes) -->
+    <section id="vibes" class="py-16 md:py-24 px-6 md:px-12 max-w-7xl mx-auto">
+        <div class="mb-12 md:mb-16 reveal">
+            <h2 class="text-sm font-mono uppercase text-brand-accent tracking-widest mb-2">Our Vibes</h2>
+            <h3 class="text-3xl md:text-5xl font-display font-bold">What we actually do.</h3>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[300px]">
-            <!-- Card 1: Large -->
-            <div class="md:col-span-2 glass-card rounded-3xl p-8 relative overflow-hidden group hoverable reveal">
-                <div class="absolute top-0 right-0 p-8 opacity-20 group-hover:opacity-40 transition-opacity">
-                    <i data-lucide="monitor" class="w-32 h-32"></i>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[250px] md:auto-rows-[300px]">
+            <!-- Card 1 -->
+            <div
+                class="md:col-span-2 glass-card rounded-3xl p-6 md:p-8 relative overflow-hidden group hoverable reveal">
+                <div
+                    class="absolute top-0 right-0 p-8 opacity-20 group-hover:opacity-40 transition-opacity group-hover:rotate-12 transition-transform">
+                    <i data-lucide="monitor" class="w-24 h-24 md:w-32 md:h-32"></i>
                 </div>
                 <div class="h-full flex flex-col justify-end relative z-10">
-                    <h4 class="text-3xl font-bold mb-2">Web Development</h4>
-                    <p class="text-gray-400">Responsive, lightning-fast websites built with modern frameworks. We turn
-                        visitors into users.</p>
+                    <h4 class="text-2xl md:text-3xl font-bold mb-2 group-hover:text-brand-accent transition-colors">
+                        Websites That Slap</h4>
+                    <p class="text-gray-400 text-sm md:text-base">If your site takes more than 2 seconds to load, we're
+                        judging you. We build fast, responsive, and aesthetic sites.</p>
                 </div>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
             </div>
 
             <!-- Card 2 -->
-            <div class="glass-card rounded-3xl p-8 relative overflow-hidden group hoverable reveal delay-100">
-                <div class="absolute top-4 right-4 bg-brand-accent/20 p-2 rounded-full text-brand-accent">
+            <div class="glass-card rounded-3xl p-6 md:p-8 relative overflow-hidden group hoverable reveal delay-100">
+                <div class="absolute top-4 right-4 bg-brand-accent/20 p-2 rounded-full text-brand-accent animate-pulse">
                     <i data-lucide="code-2"></i>
                 </div>
                 <div class="h-full flex flex-col justify-end">
-                    <h4 class="text-2xl font-bold mb-2">Custom Software</h4>
-                    <p class="text-sm text-gray-400">Tailored solutions to automate your workflow and solve complex
-                        problems.</p>
+                    <h4 class="text-xl md:text-2xl font-bold mb-2">Spaghetti Code (JK)</h4>
+                    <p class="text-xs md:text-sm text-gray-400">Custom software tailored to your specific trauma
+                        (business needs).</p>
                 </div>
             </div>
 
             <!-- Card 3 -->
-            <div class="glass-card rounded-3xl p-8 relative overflow-hidden group hoverable reveal">
+            <div class="glass-card rounded-3xl p-6 md:p-8 relative overflow-hidden group hoverable reveal">
                 <div class="absolute top-4 right-4 bg-brand-purple/20 p-2 rounded-full text-brand-purple">
                     <i data-lucide="smartphone"></i>
                 </div>
                 <div class="h-full flex flex-col justify-end">
-                    <h4 class="text-2xl font-bold mb-2">App Development</h4>
-                    <p class="text-sm text-gray-400">Cross-platform mobile experiences that feel native and fluid.</p>
+                    <h4 class="text-xl md:text-2xl font-bold mb-2">Apps 4 Phone</h4>
+                    <p class="text-xs md:text-sm text-gray-400">We make things you scroll through at 2 AM.</p>
                 </div>
             </div>
 
-            <!-- Card 4: Wide -->
+            <!-- Card 4 -->
             <div
-                class="md:col-span-2 glass-card rounded-3xl p-8 relative overflow-hidden group hoverable reveal delay-100">
+                class="md:col-span-2 glass-card rounded-3xl p-6 md:p-8 relative overflow-hidden group hoverable reveal delay-100">
                 <div
-                    class="absolute -right-10 -bottom-10 w-64 h-64 bg-gradient-to-br from-brand-accent to-transparent rounded-full opacity-10 group-hover:scale-150 transition-transform duration-500">
+                    class="absolute -right-10 -bottom-10 w-48 h-48 md:w-64 md:h-64 bg-gradient-to-br from-brand-accent to-transparent rounded-full opacity-10 group-hover:scale-[2] transition-transform duration-700">
                 </div>
                 <div class="h-full flex flex-col justify-end relative z-10">
-                    <h4 class="text-3xl font-bold mb-2">UI/UX & Branding</h4>
-                    <p class="text-gray-400">We don't just build code; we design identities. Logos, systems, and user
-                        interfaces that pop.</p>
+                    <h4 class="text-2xl md:text-3xl font-bold mb-2 group-hover:text-brand-purple transition-colors">
+                        Pixel Pushing (Design)</h4>
+                    <p class="text-gray-400 text-sm md:text-base">We make logos and UIs that don't look like they were
+                        made in MS Paint. Unless you want that.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- The Squad Section (Faceless Version) -->
-    <section id="team" class="py-24 bg-brand-gray/30 border-y border-white/5">
+    <!-- Main Characters -->
+    <section id="main-characters" class="py-16 md:py-24 bg-brand-gray/30 border-y border-white/5">
         <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-center text-4xl md:text-6xl font-display font-bold mb-16 reveal">MEET <span
-                    class="text-brand-accent">THE SQUAD</span></h2>
+            <h2 class="text-center text-3xl md:text-6xl font-display font-bold mb-12 md:mb-16 reveal">THE <span
+                    class="text-brand-accent line-through decoration-white">CULPRITS</span> SQUAD</h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <!-- Member 1: Ken (Faceless) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                <!-- Ken -->
                 <div
                     class="group relative aspect-square overflow-hidden rounded-2xl glass-card border border-white/5 hover:border-brand-accent transition-all duration-300 reveal hoverable">
                     <div
-                        class="absolute inset-0 avatar-ken opacity-40 group-hover:opacity-60 transition-opacity duration-500">
+                        class="absolute inset-0 avatar-ken opacity-40 group-hover:opacity-100 transition-opacity duration-500">
                     </div>
                     <div class="absolute inset-0 flex items-center justify-center">
-                        <i data-lucide="cpu"
-                            class="w-16 h-16 text-brand-accent opacity-50 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"></i>
+                        <span class="text-6xl group-hover:scale-150 transition-transform">🤓</span>
                     </div>
-                    <div class="absolute bottom-0 left-0 p-6 z-10">
-                        <p class="text-brand-accent font-mono text-xs mb-1">Lead Dev</p>
-                        <h3 class="text-3xl font-display font-bold">Ken</h3>
+                    <div class="absolute bottom-0 left-0 p-6 z-10 w-full bg-gradient-to-t from-black to-transparent">
+                        <p class="text-brand-accent font-mono text-xs mb-1">Chief Bug Creator</p>
+                        <h3 class="text-2xl md:text-3xl font-display font-bold">Ken</h3>
                     </div>
                 </div>
 
-                <!-- Member 2: Bri (Faceless) -->
+                <!-- Bri -->
                 <div
                     class="group relative aspect-square overflow-hidden rounded-2xl glass-card border border-white/5 hover:border-brand-purple transition-all duration-300 reveal delay-100 hoverable">
                     <div
-                        class="absolute inset-0 avatar-bri opacity-40 group-hover:opacity-60 transition-opacity duration-500">
+                        class="absolute inset-0 avatar-bri opacity-40 group-hover:opacity-100 transition-opacity duration-500">
                     </div>
                     <div class="absolute inset-0 flex items-center justify-center">
-                        <i data-lucide="palette"
-                            class="w-16 h-16 text-brand-purple opacity-50 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"></i>
+                        <span class="text-6xl group-hover:rotate-180 transition-transform">🎨</span>
                     </div>
-                    <div class="absolute bottom-0 left-0 p-6 z-10">
-                        <p class="text-brand-purple font-mono text-xs mb-1">UI/UX Wizard</p>
-                        <h3 class="text-3xl font-display font-bold">Bri</h3>
+                    <div class="absolute bottom-0 left-0 p-6 z-10 w-full bg-gradient-to-t from-black to-transparent">
+                        <p class="text-brand-purple font-mono text-xs mb-1">Color Picker God</p>
+                        <h3 class="text-2xl md:text-3xl font-display font-bold">Bri</h3>
                     </div>
                 </div>
 
-                <!-- Member 3: Selle (Faceless) -->
+                <!-- Selle -->
                 <div
                     class="group relative aspect-square overflow-hidden rounded-2xl glass-card border border-white/5 hover:border-white transition-all duration-300 reveal delay-200 hoverable">
                     <div
-                        class="absolute inset-0 avatar-selle opacity-20 group-hover:opacity-40 transition-opacity duration-500">
+                        class="absolute inset-0 avatar-selle opacity-20 group-hover:opacity-60 transition-opacity duration-500">
                     </div>
                     <div class="absolute inset-0 flex items-center justify-center">
-                        <i data-lucide="server"
-                            class="w-16 h-16 text-white opacity-50 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"></i>
+                        <span class="text-6xl group-hover:animate-bounce">💾</span>
                     </div>
-                    <div class="absolute bottom-0 left-0 p-6 z-10">
-                        <p class="text-white font-mono text-xs mb-1">Backend Architect</p>
-                        <h3 class="text-3xl font-display font-bold">Selle</h3>
+                    <div class="absolute bottom-0 left-0 p-6 z-10 w-full bg-gradient-to-t from-black to-transparent">
+                        <p class="text-white font-mono text-xs mb-1">Database Whisperer</p>
+                        <h3 class="text-2xl md:text-3xl font-display font-bold">Selle</h3>
                     </div>
                 </div>
 
-                <!-- Member 4: Ris (Faceless) -->
+                <!-- Ris -->
                 <div
                     class="group relative aspect-square overflow-hidden rounded-2xl glass-card border border-white/5 hover:border-gray-400 transition-all duration-300 reveal delay-300 hoverable">
                     <div
                         class="absolute inset-0 avatar-ris opacity-40 group-hover:opacity-60 transition-opacity duration-500">
                     </div>
                     <div class="absolute inset-0 flex items-center justify-center">
-                        <i data-lucide="target"
-                            class="w-16 h-16 text-gray-300 opacity-50 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"></i>
+                        <span class="text-6xl group-hover:scale-50 transition-transform">🗣️</span>
                     </div>
-                    <div class="absolute bottom-0 left-0 p-6 z-10">
-                        <p class="text-gray-400 font-mono text-xs mb-1">Strategy & Ops</p>
-                        <h3 class="text-3xl font-display font-bold">Ris</h3>
+                    <div class="absolute bottom-0 left-0 p-6 z-10 w-full bg-gradient-to-t from-black to-transparent">
+                        <p class="text-gray-400 font-mono text-xs mb-1">Professional Yapper</p>
+                        <h3 class="text-2xl md:text-3xl font-display font-bold">Ris</h3>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Receipts (Work) Section -->
+    <section id="receipts" class="py-16 md:py-24 px-6 max-w-7xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-display font-bold mb-8 reveal">RECEIPTS <span
+                class="text-sm font-normal text-gray-500">(Stuff we actually built)</span></h2>
+
+        <div class="space-y-4">
+            <!-- Project 1 -->
+            <div
+                class="glass-card p-6 rounded-xl flex flex-col md:flex-row gap-6 items-center hover:border-brand-accent transition-colors reveal">
+                <div class="w-full md:w-32 h-32 bg-gray-800 rounded-lg flex items-center justify-center text-4xl">🚀
+                </div>
+                <div class="flex-1 w-full text-center md:text-left">
+                    <h3 class="text-xl md:text-2xl font-bold">That One E-Commerce Site</h3>
+                    <p class="text-gray-400 text-sm md:text-base mt-2">Client wanted "Amazon but better". We gave them
+                        "Shopify but cooler". Sales went up 200% (source: trust me bro).</p>
+                </div>
+                <button
+                    class="px-4 py-2 border border-white rounded-full hover:bg-white hover:text-black transition-colors text-sm w-full md:w-auto"
+                    onclick="alert('Client NDA says no peeking 🤫')">View Case Study</button>
+            </div>
+
+            <!-- Project 2 -->
+            <div
+                class="glass-card p-6 rounded-xl flex flex-col md:flex-row gap-6 items-center hover:border-brand-purple transition-colors reveal delay-100">
+                <div class="w-full md:w-32 h-32 bg-gray-800 rounded-lg flex items-center justify-center text-4xl">🤖
+                </div>
+                <div class="flex-1 w-full text-center md:text-left">
+                    <h3 class="text-xl md:text-2xl font-bold">AI Something Something</h3>
+                    <p class="text-gray-400 text-sm md:text-base mt-2">Built a chatbot that actually understands humans.
+                        It mostly just resets passwords, but it does it with style.</p>
+                </div>
+                <button
+                    class="px-4 py-2 border border-white rounded-full hover:bg-white hover:text-black transition-colors text-sm w-full md:w-auto"
+                    onclick="alert('404: Link found but we are lazy')">View Case Study</button>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-32 px-6 relative overflow-hidden">
+    <section id="contact" class="py-20 md:py-32 px-6 relative overflow-hidden">
         <div class="max-w-4xl mx-auto text-center relative z-10">
-            <h2 class="text-5xl md:text-8xl font-display font-bold mb-8 reveal">READY TO <br> LEVEL UP?</h2>
-            <p class="text-gray-400 mb-12 text-xl reveal delay-100">Got a crazy idea? We want to hear it. Let's build
-                something illegal in 32 countries (just kidding, but we'll make it cool).</p>
+            <div class="reveal">
+                <span class="text-6xl md:text-8xl">🫣</span>
+                <h2 class="text-4xl md:text-8xl font-display font-bold mb-8 mt-4">DON'T BE SHY</h2>
+            </div>
+            <p class="text-gray-400 mb-12 text-lg md:text-xl reveal delay-100">We don't bite. Unless you ask for
+                Internet Explorer support. Then we bite.</p>
 
-            <a href="mailto:hello@kenbriselleris.com" class="inline-block hoverable reveal delay-200">
+            <a href="mailto:hello@kenbriselleris.com"
+                class="inline-block hoverable reveal delay-200 group w-full md:w-auto">
                 <div
-                    class="px-12 py-6 bg-brand-accent text-brand-black text-xl font-bold rounded-full hover:scale-105 hover:rotate-2 transition-all duration-300 shadow-[0_0_40px_-10px_rgba(204,255,0,0.5)]">
+                    class="px-6 md:px-12 py-4 md:py-6 bg-brand-accent text-brand-black text-lg md:text-xl font-bold rounded-full group-hover:scale-105 md:group-hover:scale-110 md:group-hover:rotate-180 transition-all duration-500 shadow-[0_0_40px_-10px_rgba(204,255,0,0.5)] whitespace-nowrap overflow-hidden text-ellipsis">
                     hello@kenbriselleris.com
                 </div>
+                <p
+                    class="mt-4 text-xs text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity hidden md:block">
+                    pls no spam thx</p>
             </a>
-
-            <div class="mt-16 flex justify-center gap-8 text-2xl reveal delay-300">
-                <a href="#" class="hover:text-brand-accent hoverable transition-colors"><i
-                        data-lucide="instagram"></i></a>
-                <a href="#" class="hover:text-brand-accent hoverable transition-colors"><i
-                        data-lucide="twitter"></i></a>
-                <a href="#" class="hover:text-brand-accent hoverable transition-colors"><i data-lucide="github"></i></a>
-                <a href="#" class="hover:text-brand-accent hoverable transition-colors"><i
-                        data-lucide="linkedin"></i></a>
-            </div>
         </div>
 
         <!-- Footer Decoration -->
         <div
-            class="absolute bottom-0 w-full text-center pb-4 text-white/10 text-[10vw] font-bold font-display leading-none pointer-events-none select-none">
+            class="absolute bottom-0 w-full text-center pb-4 text-white/5 text-[12vw] md:text-[10vw] font-bold font-display leading-none pointer-events-none select-none animate-pulse">
             KENBRISELLERIS
         </div>
     </section>
 
     <!-- Footer Info -->
-    <footer class="border-t border-white/10 py-8 text-center text-gray-500 text-sm">
-        <p>&copy; 2024 KenBriSelleRis. All rights reserved. Made in the Void.</p>
+    <footer class="border-t border-white/10 py-8 text-center text-gray-500 text-sm px-6">
+        <p>&copy; 2024 KenBriSelleRis. Made while dissociating in [Insert City]. <span
+                class="hover:text-brand-accent cursor-pointer"
+                onclick="alert('You found a secret! It does nothing.')">π</span></p>
     </footer>
 
     <script>
         // Initialize Icons
         lucide.createIcons();
 
+        // CONSOLE EASTER EGG
+        console.log("%c STOP LOOKING AT MY CODE ", "color: #ccff00; background: #000; font-size: 24px; padding: 10px; border: 2px solid #ccff00;");
+        console.log("Just kidding. We are hiring. (Not really, we are broke).");
+
         // Custom Cursor Logic
         const cursor = document.getElementById('cursor');
         const hoverables = document.querySelectorAll('.hoverable');
 
-        // Move cursor with mouse
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-
-        // Hover Effect
-        hoverables.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.classList.add('active');
+        // Only add mousemove listener if hover is supported
+        if (window.matchMedia("(hover: hover)").matches) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
             });
-            el.addEventListener('mouseleave', () => {
-                cursor.classList.remove('active');
+
+            hoverables.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.classList.add('active');
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('active');
+                });
             });
-        });
+        }
 
-        // Scroll Reveal Logic using Intersection Observer
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
-        };
-
+        // Scroll Reveal
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('active');
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
-        document.querySelectorAll('.reveal').forEach(el => {
-            observer.observe(el);
-        });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // Mobile Menu Logic
+        // Mobile Menu
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const closeMenuBtn = document.getElementById('close-menu');
-        const menuLinks = mobileMenu.querySelectorAll('a');
 
-        function toggleMenu() {
-            const isHidden = mobileMenu.classList.contains('translate-x-full');
-            if (isHidden) {
-                mobileMenu.classList.remove('translate-x-full');
-            } else {
-                mobileMenu.classList.add('translate-x-full');
-            }
-        }
+        const toggleMenu = () => mobileMenu.classList.toggle('translate-x-full');
 
         mobileMenuBtn.addEventListener('click', toggleMenu);
         closeMenuBtn.addEventListener('click', toggleMenu);
+        mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', toggleMenu));
 
-        // Close menu when a link is clicked
-        menuLinks.forEach(link => {
-            link.addEventListener('click', toggleMenu);
+        // EASTER EGG: KONAMI CODE
+        const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+        let konamiIndex = 0;
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === konamiCode[konamiIndex]) {
+                konamiIndex++;
+                if (konamiIndex === konamiCode.length) {
+                    activateChaosMode();
+                    konamiIndex = 0;
+                }
+            } else {
+                konamiIndex = 0;
+            }
+        });
+
+        // EASTER EGG: CHAOS MODE
+        const chaosBtn = document.getElementById('chaos-btn');
+        let chaosActive = false;
+
+        function activateChaosMode() {
+            chaosActive = !chaosActive;
+            document.body.classList.toggle('chaos-mode');
+            if (chaosActive) {
+                alert('⚠️ CHAOS MODE ACTIVATED ⚠️\n(Refreshes to fix, or click the button again)');
+                document.title = "hElP mE iM tRaPpEd";
+            } else {
+                document.title = "KenBriSelleRis | No Cap, Just Code";
+            }
+        }
+
+        chaosBtn.addEventListener('click', activateChaosMode);
+
+        // EASTER EGG: LOGO CLICK RAGE
+        const logo = document.getElementById('logo-btn');
+        let clickCount = 0;
+        logo.addEventListener('click', (e) => {
+            e.preventDefault();
+            clickCount++;
+            if (clickCount === 5) {
+                alert("You clicked the logo 5 times. Here is a cookie: 🍪");
+                clickCount = 0;
+            }
         });
 
     </script>
