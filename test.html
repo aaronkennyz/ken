@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚠️ ERROR 404: SANITY NOT FOUND ⚠️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300;400;700&family=VT323&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Comic Neue"', 'Comic Sans MS', 'cursive'],
+                        display: ['"VT323"', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            black: '#000000',
+                            dark: '#050505',
+                            gray: '#1a1a1a',
+                            accent: '#00ff00', // Hacker Green
+                            accentHover: '#ff00ff', // Magenta
+                            purple: '#ff0000', // RED
+                            error: '#ffff00',
+                        }
+                    },
+                    animation: {
+                        'marquee': 'marquee 2s linear infinite',
+                        'marquee-reverse': 'marqueeReverse 5s linear infinite',
+                        'blob': 'blob 2s infinite',
+                        'shake': 'shake 0.2s cubic-bezier(.36,.07,.19,.97) both infinite',
+                        'glitch': 'glitch 0.2s linear infinite',
+                        'spin-fast': 'spin 0.5s linear infinite',
+                        'bounce-wild': 'bounce 0.1s infinite',
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-100%)' },
+                        },
+                        marqueeReverse: {
+                            '0%': { transform: 'translateX(-100%)' },
+                            '100%': { transform: 'translateX(0%)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1) rotate(0deg)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.5) rotate(120deg)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.5) rotate(240deg)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1) rotate(360deg)' },
+                        },
+                        shake: {
+                            '10%, 90%': { transform: 'translate3d(-2px, 0, 0)' },
+                            '20%, 80%': { transform: 'translate3d(4px, 0, 0)' },
+                            '30%, 50%, 70%': { transform: 'translate3d(-6px, 0, 0)' },
+                            '40%, 60%': { transform: 'translate3d(6px, 0, 0)' }
+                        },
+                        glitch: {
+                            '2%, 64%': { transform: 'translate(5px,0) skew(20deg)' },
+                            '4%, 60%': { transform: 'translate(-5px,0) skew(-20deg)' },
+                            '62%': { transform: 'translate(0,0) skew(50deg)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Base Styles */
+        body {
+            background-color: #000000;
+            color: #00ff00;
+            overflow-x: hidden;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            background-image: repeating-linear-gradient(45deg,
+                    #050505,
+                    #050505 10px,
+                    #0a0a0a 10px,
+                    #0a0a0a 20px);
+        }
+
+        /* Seizure warning: disabled for safety, but simulated chaos */
+        .chaos-text {
+            text-shadow: 2px 2px 0px #ff0000, -2px -2px 0px #0000ff;
+        }
+
+        .custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 50px;
+            height: 50px;
+            background: red;
+            border-radius: 0%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%) rotate(45deg);
+            transition: none;
+            /* No smooth transition, pure jitter */
+            mix-blend-mode: difference;
+            display: none;
+        }
+
+        .custom-cursor.active {
+            width: 200px;
+            height: 200px;
+            background-color: #ffff00;
+            border: 5px dashed black;
+            animation: spin 1s linear infinite;
+        }
+
+        .custom-cursor.active::after {
+            content: 'DONT TOUCH ME';
+            color: black;
+            font-size: 20px;
+            font-weight: bold;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            body {
+                cursor: none;
+            }
+
+            .custom-cursor {
+                display: block;
+            }
+        }
+
+        /* Deep Fried Card */
+        .glass-card {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #00ff00;
+            box-shadow: 10px 10px 0px #ff00ff;
+            transition: all 0.1s cubic-bezier(0, 1.96, 1, -0.69);
+        }
+
+        .glass-card:hover {
+            transform: scale(1.1) rotate(5deg) skewX(10deg);
+            background: blue;
+            color: yellow;
+            border-color: yellow;
+            box-shadow: -20px -20px 0px white;
+        }
+
+        .glitch-wrapper {
+            position: relative;
+            animation: shake 2s infinite;
+        }
+
+        /* Force scrollbar to be ugly */
+        ::-webkit-scrollbar {
+            width: 20px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: red;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: lime;
+            border: 3px solid blue;
+        }
+
+        ::selection {
+            background: #ff00ff;
+            color: #ffff00;
+        }
+    </style>
+</head>
+
+<body class="selection:bg-brand-accent selection:text-brand-black">
+
+    <div class="custom-cursor" id="cursor"></div>
+
+    <div class="fixed bottom-4 right-4 z-[70]">
+        <button id="chaos-btn"
+            class="text-xl bg-red-600 text-white font-bold p-4 border-4 border-yellow-400 hoverable animate-bounce">
+            CLICK 4 FREE IPHONE
+        </button>
+    </div>
+
+    <!-- Background Chaos -->
+    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+        <div class="absolute top-[20%] left-[20%] w-full h-20 bg-brand-purple opacity-50 rotate-45 animate-marquee">
+        </div>
+        <div
+            class="absolute top-[50%] right-[20%] w-96 h-96 bg-brand-accent rounded-full filter blur-[0px] opacity-20 animate-spin-fast border-[20px] border-dashed border-red-500">
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 px-4 py-4 bg-black border-b-4 border-red-500">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="#" id="logo-btn"
+                class="text-4xl font-display font-bold tracking-tighter hoverable group z-50 relative text-red-500 hover:text-green-500 animate-pulse">
+                kEnBrIsElLeRiS.exe
+            </a>
+
+            <div class="hidden md:flex gap-8 text-xl font-bold font-sans uppercase tracking-widest text-yellow-300">
+                <a href="#receipts"
+                    class="hover:bg-white hover:text-black hover:scale-150 transition-all hoverable">Stolen Code</a>
+                <a href="#vibes"
+                    class="hover:bg-white hover:text-black hover:scale-150 transition-all hoverable">Brainrot</a>
+                <a href="#main-characters"
+                    class="hover:bg-white hover:text-black hover:scale-150 transition-all hoverable">Suspects</a>
+            </div>
+
+            <a href="#contact"
+                class="hidden md:block px-6 py-2 border-4 border-dashed border-yellow-400 bg-blue-600 text-white font-bold hover:bg-red-600 hover:rotate-180 transition-all duration-100 hoverable">
+                SEND VIRUS ->
+            </a>
+
+            <button class="md:hidden hoverable z-50 relative text-red-500 animate-spin" id="mobile-menu-btn">
+                <i data-lucide="skull"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+        class="fixed inset-0 bg-red-900 z-[60] transform translate-x-full transition-transform duration-75 flex flex-col justify-center items-center gap-8 px-4 border-l-[20px] border-yellow-400">
+        <button id="close-menu" class="absolute top-6 right-6 hoverable p-2 text-4xl" aria-label="Close menu">X</button>
+        <a href="#receipts" class="text-5xl font-display font-bold text-black bg-white p-2 rotate-3">CRIMES</a>
+        <a href="#vibes" class="text-5xl font-display font-bold text-white bg-blue-600 p-2 -rotate-6">BAD VIBES</a>
+        <a href="#main-characters"
+            class="text-5xl font-display font-bold text-yellow-300 bg-purple-600 p-2 rotate-12">THE OPPZ</a>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="min-h-screen flex flex-col justify-center items-center px-4 relative pt-32 overflow-hidden">
+        <div class="text-center max-w-5xl mx-auto z-10 w-full relative">
+            <div class="absolute -top-20 left-0 text-red-600 font-mono text-xs animate-bounce">
+                WARNING: C:/SYSTEM32 DELETING...
+            </div>
+
+            <div
+                class="inline-flex items-center gap-2 px-6 py-2 bg-red-600 border-4 border-black shadow-[8px_8px_0px_0px_rgba(255,255,0,1)] mb-6 reveal hover:animate-shake hoverable cursor-wait">
+                <span class="text-xl font-bold text-white uppercase blinking-cursor">SYSTEM CRITICAL FAILURE</span>
+            </div>
+
+            <h1
+                class="text-6xl sm:text-8xl md:text-9xl font-display font-bold leading-[0.8] tracking-tighter mb-6 text-green-500 chaos-text">
+                WE DELETE <br>
+                <span class="text-red-500 italic bg-white px-2 hover:invert">YOUR DATABASE</span>
+            </h1>
+
+            <p
+                class="text-white bg-blue-700 inline-block p-4 text-xl md:text-2xl font-bold -rotate-2 border-4 border-white mb-10 hover:rotate-2 transition-transform">
+                4 RATS IN A TRENCHCOAT "CODING" YOUR APP. <br>
+                <span class="text-yellow-300">NO REFUNDS. NO WARRANTY. NO SURVIVORS.</span>
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-8 justify-center items-center reveal delay-200 w-full">
+                <a href="#contact"
+                    class="px-8 py-6 bg-yellow-400 text-black text-2xl font-bold border-4 border-black hover:bg-black hover:text-white hover:border-red-500 hover:scale-[1.2] transition-all hoverable shadow-[10px_10px_0px_0px_#ff00ff]">
+                    DESTROY MY PC
+                </a>
+                <a href="#receipts"
+                    class="text-xl underline decoration-wavy decoration-red-500 text-white hover:text-red-500 hoverable font-mono">
+                    [ CLICK FOR MALWARE ]
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Marquee of DOOM -->
+    <div
+        class="w-full py-2 bg-red-600 text-yellow-300 overflow-hidden border-y-8 border-black transform rotate-2 z-20 hover:-rotate-2 transition-transform">
+        <div class="flex whitespace-nowrap animate-marquee font-display text-4xl">
+            <span class="mx-8">AAAAAAAAAAAAAA</span>
+            <span class="mx-8">HELP ME IM TRAPPED IN THE HTML</span>
+            <span class="mx-8">CSS IS AWESOME (LIE)</span>
+            <span class="mx-8">UNDEFINED IS NOT A FUNCTION</span>
+            <span class="mx-8">GIT PUSH --FORCE</span>
+            <span class="mx-8">I DELETED THE PRODUCTION DB</span>
+            <span class="mx-8">AAAAAAAAAAAAAA</span>
+            <span class="mx-8">HELP ME IM TRAPPED IN THE HTML</span>
+            <span class="mx-8">CSS IS AWESOME (LIE)</span>
+        </div>
+    </div>
+
+    <!-- The Manifesto (Rant) -->
+    <section class="py-24 px-6 md:px-12 bg-white relative pattern-grid-lg text-black">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <div class="reveal border-8 border-black p-8 bg-yellow-300 shadow-[20px_20px_0px_0px_#000]">
+                <h2 class="text-5xl md:text-7xl font-display font-bold mb-6 uppercase leading-none">
+                    WE DON'T KNOW<br>
+                    <span class="text-red-600 line-through">WHAT WE DOING</span><br>
+                    <span class="text-blue-600">HOW TO CENTER DIV</span>
+                </h2>
+            </div>
+            <div class="reveal delay-100 font-sans font-bold text-xl">
+                <p class="mb-4">
+                    We are KenBriSelleRis. We type random letters until it compiles. Sometimes we cry. Mostly we drink
+                    Red Bull and stare at stack traces.
+                </p>
+                <p class="text-red-600 uppercase text-3xl animate-pulse">
+                    WE USE PHP IN 2025. DEAL WITH IT.
+                </p>
+                <div class="mt-8 flex flex-wrap gap-4">
+                    <span class="p-4 bg-black text-white font-mono hover:bg-red-500 rotate-3">Notepad.exe</span>
+                    <span class="p-4 bg-black text-white font-mono hover:bg-blue-500 -rotate-2">MS Paint</span>
+                    <span class="p-4 bg-black text-white font-mono hover:bg-green-500 rotate-6">WinRAR (Trial)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services (Vibes) -->
+    <section id="vibes" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+        <div class="mb-16 reveal text-center">
+            <h2 class="text-2xl font-mono bg-red-600 text-white inline-block px-4 rotate-2">OUR "SKILLS"</h2>
+            <h3 class="text-5xl md:text-7xl font-display font-bold mt-4 text-green-500 chaos-text">THINGS WE BROKE</h3>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Card 1 -->
+            <div class="md:col-span-2 glass-card p-8 group hoverable relative">
+                <div
+                    class="absolute top-0 right-0 text-9xl opacity-20 group-hover:opacity-100 group-hover:rotate-[360deg] transition-all duration-1000">
+                    💻
+                </div>
+                <h4 class="text-4xl font-bold mb-2 text-white bg-black inline-block px-2">UGLY WEBSITES</h4>
+                <p class="text-black font-bold mt-4 text-xl bg-white p-2">We make websites that look like they were made
+                    by a raccoon on meth. High conversion (into confusion).</p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="glass-card p-8 group hoverable rotate-2">
+                <h4 class="text-3xl font-bold mb-2 bg-yellow-400 inline-block px-2">SPAGHETTI</h4>
+                <p class="text-white mt-4 font-mono">
+                    import chaos<br>
+                    while(true) {<br>
+                    &nbsp;&nbsp;panic();<br>
+                    }
+                </p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="glass-card p-8 group hoverable -rotate-3 bg-blue-900 border-red-500">
+                <h4 class="text-3xl font-bold mb-2 text-yellow-300">MOBILE BRICKS</h4>
+                <p class="text-white mt-4">We build apps that drain your battery in 4 minutes flat.</p>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="md:col-span-2 glass-card p-8 group hoverable">
+                <h4 class="text-4xl font-bold mb-2 text-red-600 bg-white inline-block px-2 border-4 border-black">
+                    GRAPHIC DESIGN IS MY PASSION</h4>
+                <p class="text-yellow-300 font-bold mt-4 text-2xl">See background. We use Comic Sans unironically.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Characters -->
+    <section id="main-characters" class="py-24 bg-red-600 border-y-[20px] border-dashed border-black">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-center text-5xl md:text-8xl font-display font-bold mb-16 text-white chaos-text">
+                WANTED <span class="text-black bg-yellow-400 px-4">DEAD OR ALIVE</span>
+            </h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Ken -->
+                <div
+                    class="group aspect-square bg-black border-4 border-white hover:bg-white hover:border-black transition-none hoverable p-4 relative overflow-hidden">
+                    <div class="absolute inset-0 bg-green-500 opacity-0 group-hover:opacity-100 animate-pulse z-0">
+                    </div>
+                    <div class="relative z-10 text-center">
+                        <span class="text-8xl block mb-4 group-hover:animate-spin">👁️</span>
+                        <h3 class="text-4xl font-display text-white group-hover:text-black">KEN</h3>
+                        <p class="font-mono text-xs text-red-500 bg-black inline-block px-1">SUSPECT #1</p>
+                    </div>
+                </div>
+
+                <!-- Bri -->
+                <div
+                    class="group aspect-square bg-white border-4 border-black hover:invert transition-none hoverable p-4 relative text-center flex flex-col justify-center">
+                    <span class="text-8xl block mb-4 animate-bounce">🤡</span>
+                    <h3 class="text-4xl font-display text-black">BRI</h3>
+                    <p class="font-mono text-xs text-white bg-red-600 inline-block px-1 mx-auto">COLORS HURT</p>
+                </div>
+
+                <!-- Selle -->
+                <div
+                    class="group aspect-square bg-blue-700 border-4 border-yellow-400 hover:rotate-12 transition-none hoverable p-4 text-center">
+                    <span class="text-8xl block mb-4">👽</span>
+                    <h3 class="text-4xl font-display text-yellow-300">SELLE</h3>
+                    <p class="font-mono text-xs text-black bg-white inline-block px-1">ALIEN DNA</p>
+                </div>
+
+                <!-- Ris -->
+                <div
+                    class="group aspect-square bg-purple-600 border-4 border-green-400 hover:skew-x-12 transition-none hoverable p-4 text-center">
+                    <span class="text-8xl block mb-4">👹</span>
+                    <h3 class="text-4xl font-display text-green-400">RIS</h3>
+                    <p class="font-mono text-xs text-black bg-white inline-block px-1">DANGEROUS</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Receipts -->
+    <section id="receipts" class="py-24 px-6 max-w-7xl mx-auto">
+        <h2
+            class="text-4xl font-display font-bold mb-8 text-white bg-black inline-block p-4 -rotate-1 border-4 border-white">
+            EVIDENCE <small class="text-sm">(We swear we didn't steal this)</small>
+        </h2>
+
+        <div class="space-y-8">
+            <div
+                class="bg-gray-900 border-4 border-red-600 p-6 flex flex-col md:flex-row gap-8 items-center hover:bg-red-900 hoverable group">
+                <div class="text-6xl group-hover:scale-[2] transition-transform">📉</div>
+                <div>
+                    <h3 class="text-3xl font-bold text-red-500 group-hover:text-white uppercase">Cryptocy Scam Site</h3>
+                    <p class="text-gray-400 font-mono">We built a coin that went to $0 in 3 seconds. The UI was fire
+                        though.</p>
+                </div>
+                <button
+                    class="ml-auto bg-yellow-400 text-black font-bold px-6 py-4 border-b-8 border-black active:border-b-0 active:translate-y-2"
+                    onclick="alert('YOUR WALLET HAS BEEN DRAINED THX')">INVEST NOW</button>
+            </div>
+
+            <div
+                class="bg-gray-900 border-4 border-blue-600 p-6 flex flex-col md:flex-row gap-8 items-center hover:bg-blue-900 hoverable group">
+                <div class="text-6xl group-hover:rotate-180 transition-transform">🚽</div>
+                <div>
+                    <h3 class="text-3xl font-bold text-blue-500 group-hover:text-white uppercase">Smart Toilet App</h3>
+                    <p class="text-gray-400 font-mono">IoT toilet that tweets every time you flush. Elon liked it.</p>
+                </div>
+                <button
+                    class="ml-auto bg-white text-black font-bold px-6 py-4 border-b-8 border-gray-400 active:border-b-0 active:translate-y-2"
+                    onclick="alert('FLUSHING...')">DOWNLOAD</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-32 px-6 relative overflow-hidden bg-yellow-300">
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <div class="reveal animate-bounce">
+                <span class="text-9xl">👀</span>
+                <h2 class="text-6xl md:text-9xl font-display font-bold mb-8 mt-4 text-black chaos-text">
+                    I SEE YOU
+                </h2>
+            </div>
+            <p class="text-black mb-12 text-2xl font-bold bg-white inline-block p-4 rotate-3 border-4 border-black">
+                WE KNOW YOUR IP ADDRESS: 127.0.0.1
+            </p>
+
+            <a href="#" class="block hoverable group" onclick="alert('NICE TRY FED')">
+                <div
+                    class="mx-auto w-full md:w-2/3 py-8 bg-black text-red-600 text-4xl font-bold border-8 border-red-600 group-hover:bg-red-600 group-hover:text-black group-hover:rotate-6 transition-all shadow-[20px_20px_0px_0px_#fff]">
+                    SEND HATE MAIL
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-green-500 py-12 text-center font-mono text-xs border-t-8 border-red-600">
+        <p>
+            &copy; 1999-2025 KenBriSelleRis Corp. <br>
+            Hosted on a toaster in my mom's basement. <br>
+            <span class="text-red-600 font-bold text-xl block mt-4 animate-pulse">DO NOT SUE US PLS</span>
+        </p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // ANNOYING CONSOLE LOGS
+        setInterval(() => {
+            console.log("%c DOWNLOAD RAM NOW ", "color: red; font-size: 20px; font-weight: bold; background: yellow;");
+        }, 5000);
+
+        // Custom Cursor Logic
+        const cursor = document.getElementById('cursor');
+        const hoverables = document.querySelectorAll('.hoverable');
+
+        if (window.matchMedia("(hover: hover)").matches) {
+            document.addEventListener('mousemove', (e) => {
+                // JITTERY MOVEMENT
+                const jitterX = Math.random() * 10 - 5;
+                const jitterY = Math.random() * 10 - 5;
+                cursor.style.left = (e.clientX + jitterX) + 'px';
+                cursor.style.top = (e.clientY + jitterY) + 'px';
+            });
+
+            hoverables.forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('active'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+            });
+        }
+
+        // Scroll Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Mobile Menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMenuBtn = document.getElementById('close-menu');
+
+        const toggleMenu = () => mobileMenu.classList.toggle('translate-x-full');
+
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', toggleMenu);
+        mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', toggleMenu));
+
+        // CHAOS BUTTON
+        document.getElementById('chaos-btn').addEventListener('click', () => {
+            alert("CONGRATULATIONS! YOU ARE THE 1,000,000th VISITOR!");
+            document.body.style.filter = "invert(1) hue-rotate(90deg) blur(2px)";
+            document.body.style.transform = "rotate(180deg)";
+        });
+
+        // Randomly change title
+        setInterval(() => {
+            const titles = ["ERROR", "VIRUS DETECTED", "DONT LOOK BEHIND YOU", "KenBriSelleRis", "404"];
+            document.title = titles[Math.floor(Math.random() * titles.length)];
+        }, 1000);
+
+    </script>
+</body>
+
+</html>
